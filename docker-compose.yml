@@ -1,0 +1,36 @@
+services:
+
+  mysql:
+
+    image: mysql:8.4
+
+    container_name: basketlove-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: basket_love_db
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+
+    build: .
+
+    container_name: basketlove-api
+
+    depends_on:
+      - mysql
+
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      JWT_SECRET: basketlovebasketlovebasketlovebasketlove123456789
+
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:
